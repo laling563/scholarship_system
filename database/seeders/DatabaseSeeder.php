@@ -1,1 +1,25 @@
-<?php\n\nnamespace Database\\Seeders;\n\nuse App\\Models\\User;\n// use Illuminate\\Database\\Console\\Seeds\\WithoutModelEvents;\nuse Illuminate\Database\Seeder;\n\nclass DatabaseSeeder extends Seeder\n{\n    /**\n     * Seed the application's database.\n     */\n    public function run(): void\n    {\n        // User::factory(10)->create();\n\n        User::factory()->create([\n            'name' => 'Test User',\n            'email' => 'test@example.com',\n        ]);\n\n        $this->call(SponsorSeeder::class);\n    }\n}\n
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\User;
+// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+
+class DatabaseSeeder extends Seeder
+{
+    /**
+     * Seed the application's database.
+     */
+    public function run(): void
+    {
+        // Example user
+        User::factory()->create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+        ]);
+
+        // Call other seeders
+        $this->call(SponsorSeeder::class);
+    }
+}

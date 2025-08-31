@@ -4,28 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sponsor Dashboard</title>
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    {{-- Use Vite or Mix depending on your Laravel setup --}}
+    @vite('resources/css/app.css')
+    @vite('resources/js/app.js')
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-100 font-sans antialiased">
+    <!-- Navbar -->
     <nav class="bg-white shadow-md">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
+                <!-- Left -->
                 <div class="flex">
+                    <!-- Logo -->
                     <div class="flex-shrink-0 flex items-center">
                         <a href="{{ route('sponsor.dashboard') }}">
-                            <img class="h-8 w-auto" src="{{ asset('images/psulogo.jpg') }}" alt="Logo">
+                            <img class="h-10 w-auto" src="{{ asset('images/psulogo.jpg') }}" alt="Logo">
                         </a>
                     </div>
-                    <div class="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
-                        <a href="{{ route('sponsor.dashboard') }}" class="border-indigo-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                    <!-- Nav Links -->
+                    <div class="hidden sm:ml-8 sm:flex sm:space-x-6">
+                        <a href="{{ route('sponsor.dashboard') }}"
+                           class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium
+                           {{ request()->routeIs('sponsor.dashboard')
+                                ? 'border-indigo-500 text-gray-900'
+                                : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700' }}">
                             Dashboard
+                        </a>
+                        <a href="{{ route('sponsor.applications') }}"
+                           class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium
+                           {{ request()->routeIs('sponsor.applications')
+                                ? 'border-indigo-500 text-gray-900'
+                                : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700' }}">
+                            Applications
                         </a>
                     </div>
                 </div>
-                <div class="hidden sm:ml-6 sm:flex sm:items-center">
+
+                <!-- Right -->
+                <div class="hidden sm:flex sm:items-center">
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-                        <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <button type="submit"
+                            class="ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md
+                                   text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none
+                                   focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition">
                             Logout
                         </button>
                     </form>
@@ -34,12 +56,11 @@
         </div>
     </nav>
 
+    <!-- Main -->
     <main class="py-10">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             @yield('content')
         </div>
     </main>
-
-    <script src="{{ asset('js/app.js') }}" defer></script>
 </body>
 </html>

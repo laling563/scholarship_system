@@ -82,6 +82,11 @@
                     Sign up <i class="bi bi-arrow-right"></i>
                 </a>
             </div>
+            <div class="text-center mt-3">
+                <a href="{{ route('sponsor.login') }}" class="sponsor-login-link">
+                    Login as Sponsor
+                </a>
+            </div>
         </form>
     </div>
 </div>
@@ -252,6 +257,17 @@
     }
 
     .forgot-password:hover {
+        color: #0d6efd;
+    }
+
+    .sponsor-login-link {
+        font-size: 0.95rem;
+        color: #6c757d;
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    .sponsor-login-link:hover {
         color: #0d6efd;
     }
 
