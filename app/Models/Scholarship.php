@@ -15,6 +15,7 @@ class Scholarship extends Model
         'start_date',
         'end_date',
         'student_limit',
+        'sponsor_id',
     ];
 
     protected $casts = [
@@ -26,6 +27,9 @@ class Scholarship extends Model
     public function applicationForms() {
         return $this->hasMany(ApplicationForm::class, 'scholarship_id', 'scholarship_id');
     }
-    
-    
+
+    public function sponsor()
+    {
+        return $this->belongsTo(Sponsor::class);
+    }
 }

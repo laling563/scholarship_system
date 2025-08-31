@@ -44,6 +44,10 @@ return [
             'driver' => 'session',
             'provider' => 'students',
         ],
+        'sponsor' => [
+            'driver' => 'session',
+            'provider' => 'sponsors',
+        ],
     ],
 
     /*
@@ -71,6 +75,10 @@ return [
         'students' => [
             'driver' => 'eloquent',
             'model' => App\Models\Student::class, // Make sure this is the correct path to your Student model
+        ],
+        'sponsors' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Sponsor::class,
         ],
     ],
 
@@ -115,4 +123,3 @@ return [
 
     'password_timeout' => env('AUTH_PASSWORD_TIMEOUT', 10800),
 ];
- 

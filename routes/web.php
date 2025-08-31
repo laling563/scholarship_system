@@ -10,6 +10,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\ApplicationFormController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\ApplicationDocumentController;
+use App\Http\Controllers\SponsorDashboardController;
 use App\Http\Controllers\StudentDashboardController;
 use App\Models\ApplicationForm;
 use Illuminate\Support\Facades\Route;
@@ -69,14 +70,20 @@ Route::put('/applications/{id}/reject', [ApplicationController::class, 'reject']
 
 Route::get('/Scholars', [ScholarsController::class, 'index'])->name('scholars.index');
 
+// Sponsor routes
+Route::get('sponsor/login', [LoginController::class, 'showSponsorLoginForm'])->name('sponsor.login');
+Route::post('sponsor/login', [LoginController::class, 'sponsorLogin']);
 
+Route::middleware(['auth:sponsor'])->prefix('sponsor')->name('sponsor.')->group(function () {
+    Route::get('dashboard', [SponsorDashboardController::class, 'index'])->name('dashboard');
+    Route::get('applications', [ApplicationController::class, 'index'])->name('applications');
+    Route::get('applications/{id}/view', [ApplicationController::class, 'view'])->name('applications.view');
+    Route::put('applications/{id}/accept', [ApplicationController::class, 'accept'])->name('applications.accept');
+    Route::put('applications/{id}/reject', [ApplicationController::class, 'reject'])->name('applications.reject');
+});
 
 // Route::middleware(['auth:student'])->group(function () {
 //     Route::get('/student/scholarships', [ScholarshipController::class, 'availableScholarships'])->name('student.scholarships');
 //     Route::get('/student/application/create', [ApplicationFormController::class, 'studentCreate'])->name('student.application.create');
 //     Route::post('/student/application/store', [ApplicationFormController::class, 'studentStore'])->name('student.application.store');
 // });
-
-
-
-

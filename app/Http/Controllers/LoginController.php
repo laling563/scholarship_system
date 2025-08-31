@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Models\Scholarship;
 use App\Models\Admin;  // Add the Admin model
+use App\Models\Sponsor;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -83,9 +85,35 @@ class LoginController extends Controller
     public function logout(Request $request)
     {
         $request->session()->forget(['student_id', 'admin_id']);  // Clear both student and admin session data
+        Auth::guard('web')->logout();
+        Auth::guard('student')->logout();
+        Auth::guard('sponsor')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
         return redirect()->route('LoginPage')->with('success', 'Logged out successfully.');
+    }
+
+    public function showSponsorLoginForm()
+    {
+        return view('Login.SponsorLoginPage');
+    }
+
+    public function sponsorLogin(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+
+        if (Auth::guard('sponsor')->attempt($credentials)) {
+            $request->session()->regenerate();
+
+            return redirect()->intended(route('sponsor.dashboard'));
+        }
+
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ]);
     }
 }
