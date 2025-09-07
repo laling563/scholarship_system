@@ -35,7 +35,6 @@ Route::get('/dashboard', function () {
 })->name('dashboard');
 //PAG SUCCESSFUL PUPUNTA SYA SA DASHBOARD NG ADMIN!
 Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin_dashboard');
-Route::resource('/Scholarship',ScholarshipController::class);
 
 // Application Form Routes
 Route::resource('application-forms', ApplicationFormController::class);
@@ -60,14 +59,6 @@ Route::get('/student/my-applications', action: [StudentController::class, 'mySch
 Route::get('/student/listscholarship', action: [StudentController::class, 'ListScholarship'])
 ->name('student.listscholarship');
 
-
-Route::get('/applications', [ApplicationController::class, 'index'])->name('applications.index');
-Route::patch('/applications/{application}/status', [ApplicationController::class, 'updateStatus'])->name('applications.updateStatus');
-Route::get('/applications/{id}/view', [ApplicationController::class, 'view'])->name('applications.view');
-
-Route::put('/applications/{id}/accept', [ApplicationController::class, 'accept'])->name('applications.accept');
-Route::put('/applications/{id}/reject', [ApplicationController::class, 'reject'])->name('applications.reject');
-
 Route::get('/Scholars', [ScholarsController::class, 'index'])->name('scholars.index');
 
 // Sponsor routes
@@ -76,14 +67,14 @@ Route::post('sponsor/login', [LoginController::class, 'sponsorLogin']);
 
 Route::middleware(['auth:sponsor'])->prefix('sponsor')->name('sponsor.')->group(function () {
     Route::get('dashboard', [SponsorDashboardController::class, 'index'])->name('dashboard');
+    
+    // Application routes
     Route::get('applications', [ApplicationController::class, 'index'])->name('applications');
+    Route::patch('applications/{application}/status', [ApplicationController::class, 'updateStatus'])->name('applications.updateStatus');
     Route::get('applications/{id}/view', [ApplicationController::class, 'view'])->name('applications.view');
     Route::put('applications/{id}/accept', [ApplicationController::class, 'accept'])->name('applications.accept');
     Route::put('applications/{id}/reject', [ApplicationController::class, 'reject'])->name('applications.reject');
-});
 
-// Route::middleware(['auth:student'])->group(function () {
-//     Route::get('/student/scholarships', [ScholarshipController::class, 'availableScholarships'])->name('student.scholarships');
-//     Route::get('/student/application/create', [ApplicationFormController::class, 'studentCreate'])->name('student.application.create');
-//     Route::post('/student/application/store', [ApplicationFormController::class, 'studentStore'])->name('student.application.store');
-// });
+    // Scholarship routes
+    Route::resource('scholarships', ScholarshipController::class);
+});

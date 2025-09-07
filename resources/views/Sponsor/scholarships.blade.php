@@ -1,4 +1,4 @@
-@extends('Admin.AdminLayout')
+@extends('Sponsor.SponsorLayout')
 @php $hideSidebar = true; @endphp
 
 @section('content')
@@ -18,7 +18,7 @@
                         </span>
                         <input type="text" id="scholarshipSearch" class="form-control border-start-0" placeholder="Search scholarships...">
                     </div> -->
-                    <a href="{{ route('Scholarship.create') }}" class="btn btn-primary">
+                    <a href="{{ route('sponsor.scholarships.create') }}" class="btn btn-primary">
                         <i class="bi bi-plus-circle me-2"></i> Create New
                     </a>
                 </div>
@@ -109,7 +109,7 @@
                                             <!-- <a href="#" class="btn btn-sm btn-outline-info rounded-pill" data-bs-toggle="tooltip" title="View Details">
                                                 <i class="bi bi-eye"></i> -->
                                             </a>
-                                            <a href="{{ route('Scholarship.edit', $scholarship->scholarship_id) }}" class="btn btn-sm btn-outline-warning rounded-pill" data-bs-toggle="tooltip" title="Edit">
+                                            <a href="{{ route('sponsor.scholarships.edit', $scholarship->scholarship_id) }}" class="btn btn-sm btn-outline-warning rounded-pill" data-bs-toggle="tooltip" title="Edit">
                                                 <i class="bi bi-pencil"></i>
                                             </a>
                                             <button type="button" class="btn btn-sm btn-outline-danger rounded-pill" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $scholarship->scholarship_id }}" data-bs-tooltip="tooltip" title="Delete">
@@ -138,7 +138,7 @@
                                             </div>
                                             <div class="modal-footer border-0">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                                <form action="{{ route('Scholarship.destroy', $scholarship->scholarship_id) }}" method="POST" class="d-inline-block">
+                                                <form action="{{ route('sponsor.scholarships.destroy', $scholarship->scholarship_id) }}" method="POST" class="d-inline-block">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger">
