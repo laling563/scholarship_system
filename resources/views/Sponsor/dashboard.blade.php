@@ -46,7 +46,7 @@
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         <span class="fw-semibold">{{ $scholarship->title }}</span>
                         <span class="badge bg-primary rounded-pill">
-                            {{ $scholarship->applicationForms->count() }} applicants
+                            {{ $scholarship->application_forms_count }} applicants
                         </span>
                     </li>
                 @empty

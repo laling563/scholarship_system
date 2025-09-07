@@ -1,85 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sponsor Dashboard</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    /* Custom styles for better UX */
-    .nav-link.active {
-      color: #0d6efd !important;
-      border-bottom: 2px solid #0d6efd;
-    }
-    .navbar-brand {
-      font-size: 1.3rem;
-    }
-    .btn-logout {
-      transition: 0.3s;
-    }
-    .btn-logout:hover {
-      background-color: #dc3545;
-      color: white;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@yield('title', 'Sponsor Dashboard - PSU Scholarship System')</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom Sponsor CSS -->
+    <style>
+        :root {
+            --sponsor-primary: #2c3e50; /* Same as admin */
+            --sponsor-secondary: #34495e; /* Same as admin */
+            --sponsor-accent: #3498db; /* Same as admin */
+            --sponsor-light: #ecf0f1; /* Same as admin */
+            --sponsor-danger: #e74c3c; /* Same as admin */
+            --sponsor-success: #2ecc71; /* Same as admin */
+            --sponsor-warning: #f39c12; /* Same as admin */
+            --sponsor-info: #3498db; /* Same as admin */
+        }
+
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .sponsor-sidebar {
+            background: var(--sponsor-primary);
+            color: white;
+            height: 100vh;
+            position: fixed;
+            transition: all 0.3s;
+            width: 250px;
+            z-index: 1000;
+        }
+
+        .sponsor-sidebar .sidebar-header {
+            padding: 20px;
+            background: var(--sponsor-secondary);
+        }
+
+        .sponsor-sidebar ul.components {
+            padding: 0;
+            border-bottom: 1px solid #47748b;
+        }
+
+        .sponsor-sidebar ul li a {
+            padding: 12px 20px;
+            display: block;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s;
+            border-left: 3px solid transparent;
+        }
+
+        .sponsor-sidebar ul li a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-left: 3px solid var(--sponsor-accent);
+        }
+
+        .sponsor-sidebar ul li a.active {
+            background: rgba(255, 255, 255, 0.1);
+            border-left: 3px solid var(--sponsor-accent);
+        }
+
+        .sponsor-sidebar ul li a i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .sponsor-sidebar .sidebar-footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 15px;
+            background: var(--sponsor-secondary);
+        }
+
+        .sponsor-content {
+            margin-left: 250px;
+            transition: all 0.3s;
+            min-height: 100vh;
+        }
+    </style>
+    @yield('styles')
 </head>
-<body class="bg-light">
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
-    <div class="container">
-      <!-- Brand -->
-      <a class="navbar-brand fw-bold text-primary" href="{{ route('sponsor.dashboard') }}">
-        <i class="fas fa-hand-holding-heart me-2"></i>Sponsor Dashboard
-      </a>
+<body>
+    <div class="wrapper d-flex align-items-stretch">
+        <!-- Sidebar -->
+        <nav id="sidebar" class="sponsor-sidebar">
+            <div class="sidebar-header">
+                <h4 class="mb-0">PSU Scholarship</h4>
+                <p class="text-light mb-0"><small>Sponsor Panel</small></p>
+            </div>
 
-      <!-- Toggler for Mobile -->
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+            <div class="px-3 py-2 d-flex align-items-center">
+                <img src="/images/sponsor.png" class="rounded-circle me-2" alt="Sponsor" style="width: 40px; height: 40px; object-fit: cover;">
+                <div>
+                    <h6 class="mb-0">{{ Auth::guard('sponsor')->user()->name }}</h6>
+                </div>
+            </div>
 
-      <!-- Navbar Links -->
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('sponsor.dashboard') ? 'active fw-semibold' : '' }}"
-               href="{{ route('sponsor.dashboard') }}">
-              <i class="fas fa-home me-1"></i>Dashboard
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('sponsor.applications') ? 'active fw-semibold' : '' }}"
-               href="{{ route('sponsor.applications') }}">
-              <i class="fas fa-file-alt me-1"></i>Applications
-            </a>
-          </li>
-        </ul>
+            <ul class="list-unstyled components">
+                <li>
+                    <a href="{{ route('sponsor.dashboard') }}" class="{{ request()->routeIs('sponsor.dashboard') ? 'active' : '' }}">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('sponsor.scholarships.index') }}" class="{{ request()->routeIs('sponsor.scholarships.index') ? 'active' : '' }}">
+                        <i class="fas fa-graduation-cap"></i> Scholarships
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('sponsor.applications.index') }}" class="{{ request()->routeIs('sponsor.applications.index') ? 'active' : '' }}">
+                        <i class="fas fa-file-alt"></i> Applications
+                    </a>
+                </li>
+            </ul>
 
-        <!-- Right Side (Logout) -->
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <form action="{{ route('logout') }}" method="POST" class="d-inline">
-              @csrf
-              <button type="submit" class="btn btn-outline-danger btn-sm btn-logout">
-                <i class="fas fa-sign-out-alt me-1"></i>Logout
-              </button>
-            </form>
-          </li>
-        </ul>
-      </div>
+            <div class="sidebar-footer">
+                <div class="d-flex justify-content-between">
+                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="text-light" title="Logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </a>
+                    <form id="logout-form" action="{{ route('sponsor.logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Page Content -->
+        <div id="content" class="sponsor-content">
+            <div class="container-fluid py-4">
+                @if(session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+
+                @if(session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ session('error') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+
+                @yield('content')
+            </div>
+        </div>
     </div>
-  </nav>
 
-  <!-- Main -->
-  <main class="py-4">
-    <div class="container">
-      @yield('content')
-    </div>
-  </main>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+    @yield('scripts')
 </body>
 </html>
