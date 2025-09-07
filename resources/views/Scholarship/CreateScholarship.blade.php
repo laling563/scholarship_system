@@ -10,7 +10,7 @@
                         <i class="bi bi-plus-circle me-2"></i> Create New Scholarship
                     </h2>
                 </div>
-                <a href="{{ route('Scholarship.index') }}" class="btn btn-outline-secondary">
+                <a href="{{ route('sponsor.scholarships.index') }}" class="btn btn-outline-secondary">
                     <i class="bi bi-arrow-left me-1"></i> Back to List
                 </a>
             </div>
@@ -54,7 +54,7 @@
                     <p class="mb-0 text-muted">Fill in the form below to create a new scholarship program</p>
                 </div>
                 <div class="card-body p-4">
-                    <form action="{{ route('Scholarship.store') }}" method="POST">
+                    <form action="{{ route('sponsor.scholarships.store') }}" method="POST">
                         @csrf
 
                         <div class="row mb-4">
@@ -141,8 +141,6 @@
                         </div>
 
                         <div class="d-flex justify-content-between border-top pt-4 mt-3">
-                            <!-- <a href="{{ route('Scholarship.index') }}" class="btn btn-outline-secondary px-4">
-                                <i class="bi bi-x-circle me-1"></i> Cancel -->
                             </a>
                             <button type="submit" class="btn btn-primary px-4">
                                 <i class="bi bi-save me-1"></i> Create Scholarship

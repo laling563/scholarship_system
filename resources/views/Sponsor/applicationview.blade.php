@@ -1,4 +1,4 @@
-@extends('Sponsor.SponsorLayout')
+@extends('layouts.sponsor')
 
 @section('content')
 <div class="container-fluid py-4" style="margin-left: 100px;">

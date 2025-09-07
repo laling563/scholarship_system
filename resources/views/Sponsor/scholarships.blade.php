@@ -1,4 +1,4 @@
-@extends('Sponsor.SponsorLayout')
+@extends('layouts.sponsor')
 @php $hideSidebar = true; @endphp
 
 @section('content')

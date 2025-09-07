@@ -33,6 +33,7 @@ class ApplicationController extends Controller
     {
         $application = ApplicationForm::with('student','documents')->findOrFail($id);
 
+
         if (Auth::guard('sponsor')->check()) {
             $this->authorizeSponsorAction($application);
             return view('Sponsor.applicationview', compact('application'));

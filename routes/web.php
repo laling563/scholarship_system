@@ -67,7 +67,7 @@ Route::post('sponsor/login', [LoginController::class, 'sponsorLogin']);
 
 Route::middleware(['auth:sponsor'])->prefix('sponsor')->name('sponsor.')->group(function () {
     Route::get('dashboard', [SponsorDashboardController::class, 'index'])->name('dashboard');
-    
+
     // Application routes
     Route::get('applications', [ApplicationController::class, 'index'])->name('applications');
     Route::patch('applications/{application}/status', [ApplicationController::class, 'updateStatus'])->name('applications.updateStatus');

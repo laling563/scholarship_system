@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,14 +13,22 @@
     <!-- Custom Sponsor CSS -->
     <style>
         :root {
-            --sponsor-primary: #2c3e50; /* Same as admin */
-            --sponsor-secondary: #34495e; /* Same as admin */
-            --sponsor-accent: #3498db; /* Same as admin */
-            --sponsor-light: #ecf0f1; /* Same as admin */
-            --sponsor-danger: #e74c3c; /* Same as admin */
-            --sponsor-success: #2ecc71; /* Same as admin */
-            --sponsor-warning: #f39c12; /* Same as admin */
-            --sponsor-info: #3498db; /* Same as admin */
+            --sponsor-primary: #2c3e50;
+            /* Same as admin */
+            --sponsor-secondary: #34495e;
+            /* Same as admin */
+            --sponsor-accent: #3498db;
+            /* Same as admin */
+            --sponsor-light: #ecf0f1;
+            /* Same as admin */
+            --sponsor-danger: #e74c3c;
+            /* Same as admin */
+            --sponsor-success: #2ecc71;
+            /* Same as admin */
+            --sponsor-warning: #f39c12;
+            /* Same as admin */
+            --sponsor-info: #3498db;
+            /* Same as admin */
         }
 
         body {
@@ -88,6 +97,7 @@
     </style>
     @yield('styles')
 </head>
+
 <body>
     <div class="wrapper d-flex align-items-stretch">
         <!-- Sidebar -->
@@ -98,7 +108,8 @@
             </div>
 
             <div class="px-3 py-2 d-flex align-items-center">
-                <img src="/images/sponsor.png" class="rounded-circle me-2" alt="Sponsor" style="width: 40px; height: 40px; object-fit: cover;">
+                <img src="/images/sponsor.png" class="rounded-circle me-2" alt="Sponsor"
+                    style="width: 40px; height: 40px; object-fit: cover;">
                 <div>
                     <h6 class="mb-0">{{ Auth::guard('sponsor')->user()->name }}</h6>
                 </div>
@@ -106,17 +117,20 @@
 
             <ul class="list-unstyled components">
                 <li>
-                    <a href="{{ route('sponsor.dashboard') }}" class="{{ request()->routeIs('sponsor.dashboard') ? 'active' : '' }}">
+                    <a href="{{ route('sponsor.dashboard') }}"
+                        class="{{ request()->routeIs('sponsor.dashboard') ? 'active' : '' }}">
                         <i class="fas fa-tachometer-alt"></i> Dashboard
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('sponsor.scholarships.index') }}" class="{{ request()->routeIs('sponsor.scholarships.index') ? 'active' : '' }}">
+                    <a href="{{ route('sponsor.scholarships.index') }}"
+                        class="{{ request()->routeIs('sponsor.scholarships.index') ? 'active' : '' }}">
                         <i class="fas fa-graduation-cap"></i> Scholarships
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('sponsor.applications.index') }}" class="{{ request()->routeIs('sponsor.applications.index') ? 'active' : '' }}">
+                    <a href="{{ route('sponsor.applications') }}"
+                        class="{{ request()->routeIs('sponsor.applications') ? 'active' : '' }}">
                         <i class="fas fa-file-alt"></i> Applications
                     </a>
                 </li>
@@ -124,10 +138,17 @@
 
             <div class="sidebar-footer">
                 <div class="d-flex justify-content-between">
-                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="text-light" title="Logout">
+                    <a href="" class="text-light" title="Profile">
+                        <i class="fas fa-user-circle"></i>
+                    </a>
+                    <a href="" class="text-light" title="Notifications">
+                        <i class="fas fa-bell"></i>
+                    </a>
+                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                        class="text-light" title="Logout">
                         <i class="fas fa-sign-out-alt"></i>
                     </a>
-                    <form id="logout-form" action="{{ route('sponsor.logout') }}" method="POST" class="d-none">
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                         @csrf
                     </form>
                 </div>
@@ -162,4 +183,5 @@
 
     @yield('scripts')
 </body>
+
 </html>

@@ -37,7 +37,7 @@
                                 @endif
                             </td>
                             <td class="text-center">
-                                <a href="{{ route('sponsor.applications.view', $application->id) }}"
+                                <a href="{{ route('sponsor.applications.view', $application->applicationform_id) }}"
                                    class="btn btn-sm btn-outline-primary rounded-pill">
                                     <i class="fas fa-eye me-1"></i> View
                                 </a>

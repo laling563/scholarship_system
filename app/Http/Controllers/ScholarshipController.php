@@ -6,11 +6,11 @@ use Illuminate\Support\Facades\Auth;
 
 class ScholarshipController extends Controller
 {
- public function availableScholarships()
-{
-    $scholarships = Scholarship::where('is_open', true)->get();
-    return view('Student.dashboard', compact('scholarships'));
-}
+    public function availableScholarships()
+    {
+        $scholarships = Scholarship::where('is_open', true)->get();
+        return view('Student.dashboard', compact('scholarships'));
+    }
 
     public function index()
     {
@@ -21,7 +21,7 @@ class ScholarshipController extends Controller
 
     public function create()
     {
-        return view('Sponsor.CreateScholarship');
+        return view('Scholarship.CreateScholarship');
     }
 
     public function store(Request $request)
