@@ -306,6 +306,67 @@
                 </div>
             </div>
 
+            <!-- Scholarship Actions -->
+            <div class="card mb-4 border-0 shadow-sm">
+                <div class="card-header bg-success text-white py-3">
+                    <h5 class="mb-0"><i class="bi bi-check2-circle me-2"></i>Scholarship Actions</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <h6 class="text-muted small mb-1">Scholarship</h6>
+                            <p class="mb-0 h5">{{ $application->scholarship->title }}</p>
+                        </div>
+                        <div class="col-md-4">
+                            <h6 class="text-muted small mb-1">Remaining Budget</h6>
+                            <p class="mb-0 h5">₱{{ number_format($application->scholarship->budget, 2) }}</p>
+                        </div>
+                         <div class="col-md-4">
+                            <h6 class="text-muted small mb-1">Status</h6>
+                            <p class="mb-0 h5">{{ ucfirst($application->scholarship->status) }}</p>
+                        </div>
+                    </div>
+
+                    @if ($application->scholarship->status == 'open')
+                        <hr>
+                        <form action="{{ route('sponsor.scholarships.acceptStudent', $application->scholarship) }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="application_id" value="{{ $application->id }}">
+                            <div class="row align-items-end">
+                                <div class="col-md-6">
+                                    <label for="amount" class="form-label fw-bold">Amount to Award</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">₱</span>
+                                        <input type="number" class="form-control" name="amount" id="amount" min="0" step="0.01" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <button type="submit" class="btn btn-success w-100">
+                                        <i class="bi bi-check-lg me-1"></i> Accept Application
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    @else
+                        <div class="alert alert-warning mt-3">
+                            This scholarship is currently {{ $application->scholarship->status }}. You cannot accept new applications.
+                        </div>
+                    @endif
+
+                    @if(session('success'))
+                        <div class="alert alert-success mt-3">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+                    @if(session('error'))
+                        <div class="alert alert-danger mt-3">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+
+                </div>
+            </div>
+
             <!-- Back Button -->
             <div class="d-flex justify-content-start mt-4">
                 <a href="{{ route('sponsor.applications') }}" class="btn btn-secondary">

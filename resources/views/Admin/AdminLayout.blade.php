@@ -213,6 +213,12 @@
                         <i class="fas fa-users"></i> Scholars
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('admin.applications') }}"
+                        class="{{ request()->routeIs('admin.applications') ? 'active' : '' }}">
+                        <i class="fas fa-file-alt"></i> Applications
+                    </a>
+                </li>
             </ul>
 
             <div class="sidebar-footer">

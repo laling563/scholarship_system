@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ApplicationForm;
+use App\Models\Scholarship; // Import the Scholarship model
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -46,10 +47,36 @@ class ApplicationController extends Controller
     {
         $application = ApplicationForm::findOrFail($id);
         $this->authorizeSponsorAction($application);
-        $application->status = 'approved';
-        $application->save();
 
-        return redirect()->back()->with('success', 'Application accepted.');
+        $scholarship = $application->scholarship;
+
+        // Check if the scholarship has a budget and grant amount
+        if ($scholarship->budget !== null && $scholarship->grant_amount !== null) {
+            // Ensure there is enough budget
+            if ($scholarship->budget >= $scholarship->grant_amount) {
+                $scholarship->budget -= $scholarship->grant_amount;
+
+                // If the budget is depleted, close the scholarship
+                if ($scholarship->budget <= 0) {
+                    $scholarship->status = 'closed';
+                }
+
+                $scholarship->save();
+
+                $application->status = 'approved';
+                $application->save();
+
+                return redirect()->back()->with('success', 'Application accepted and budget updated.');
+            } else {
+                return redirect()->back()->with('error', 'Not enough budget to accept this application.');
+            }
+        } else {
+            // If no budget or grant amount is set, just accept the application
+            $application->status = 'approved';
+            $application->save();
+
+            return redirect()->back()->with('success', 'Application accepted.');
+        }
     }
 
     public function reject($id)

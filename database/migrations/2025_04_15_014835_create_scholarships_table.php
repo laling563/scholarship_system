@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('title');
             $table->text('description')->nullable();
             $table->text('requirements')->nullable();
-            $table->boolean('is_open')->default(true);
+            $table->string('status')->default('open');
+            $table->decimal('budget', 10, 2)->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->integer('student_limit')->nullable();

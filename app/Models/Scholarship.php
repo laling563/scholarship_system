@@ -11,15 +11,17 @@ class Scholarship extends Model
         'title',
         'description',
         'requirements',
-        'is_open',
+        'status',
+        'budget',
+        'grant_amount',
         'start_date',
         'end_date',
         'student_limit',
         'sponsor_id',
+        'accepted_students',
     ];
 
     protected $casts = [
-        'is_open' => 'boolean',
     ];
 
     protected $primaryKey = 'scholarship_id';

@@ -27,7 +27,7 @@
     @endif
 
     {{-- Validation Errors --}}
-    @if($errors->any()))
+    @if($errors->any())
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
             <div class="d-flex align-items-center">
                 <i class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2"></i>
@@ -111,6 +111,32 @@
                                 @error('end_date')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                             <div class="col-md-4">
+                                <label for="status" class="form-label fw-bold">
+                                    <i class="bi bi-check-circle me-1"></i> Status
+                                </label>
+                                <select class="form-select @error('status') is-invalid @enderror" id="status" name="status">
+                                    <option value="open" {{ old('status', 'open') == 'open' ? 'selected' : '' }}>Open</option>
+                                    <option value="closed" {{ old('status') == 'closed' ? 'selected' : '' }}>Closed</option>
+                                    <option value="on-hold" {{ old('status') == 'on-hold' ? 'selected' : '' }}>On Hold</option>
+                                </select>
+                                @error('status')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-4">
+                                <label for="budget" class="form-label fw-bold">
+                                    <i class="bi bi-cash-coin me-1"></i> Budget
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-text">$</span>
+                                    <input type="number" class="form-control @error('budget') is-invalid @enderror"
+                                           name="budget" id="budget" value="{{ old('budget') }}" min="0" step="0.01">
+                                </div>
+                                @error('budget')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                                <div class="form-text text-muted">Enter the total scholarship budget.</div>
+                            </div>
+                            <div class="col-md-4">
                                 <label for="student_limit" class="form-label fw-bold">
                                     <i class="bi bi-people me-1"></i> Student Limit
                                 </label>
@@ -121,22 +147,6 @@
                                 </div>
                                 @error('student_limit')<div class="invalid-feedback">{{ $message }}</div>@enderror
                                 <div class="form-text text-muted">Leave empty for unlimited applicants</div>
-                            </div>
-                        </div>
-
-                        <div class="row mb-4">
-                            <div class="col-md-12">
-                                <div class="form-check form-switch ps-0">
-                                    <div class="d-flex align-items-center">
-                                        <input type="hidden" name="is_open" value="0">
-                                        <input class="form-check-input ms-0 me-2" type="checkbox" name="is_open" id="is_open"
-                                               value="1" {{ old('is_open', true) ? 'checked' : '' }}>
-                                        <label class="form-check-label fw-bold" for="is_open">
-                                            <i class="bi bi-door-open me-1"></i> Accepting Applications
-                                        </label>
-                                    </div>
-                                    <div class="form-text text-muted">Toggle to control if students can apply for this scholarship.</div>
-                                </div>
                             </div>
                         </div>
 

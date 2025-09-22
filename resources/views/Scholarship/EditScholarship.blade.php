@@ -10,7 +10,7 @@
                         <i class="bi bi-pencil-square me-2"></i> Edit Scholarship
                     </h2>
                 </div>
-                <a href="{{ route('Scholarship.index') }}" class="btn btn-outline-secondary">
+                <a href="{{ route('sponsor.scholarships.index') }}" class="btn btn-outline-secondary">
                     <i class="bi bi-arrow-left me-1"></i> Back to List
                 </a>
             </div>
@@ -27,7 +27,7 @@
     @endif
 
     {{-- Validation Errors --}}
-    @if($errors->any()))
+    @if($errors->any())
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
             <div class="d-flex align-items-center">
                 <i class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2"></i>
@@ -54,7 +54,7 @@
                     <p class="mb-0 text-muted">Update the scholarship information below</p>
                 </div>
                 <div class="card-body p-4">
-                    <form action="{{ route('Scholarship.update', $scholarship) }}" method="POST">
+                    <form action="{{ route('sponsor.scholarships.update', $scholarship) }}" method="POST">
                         @csrf
                         @method('PUT')
 
@@ -112,6 +112,32 @@
                                 @error('end_date')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                             <div class="col-md-4">
+                                <label for="status" class="form-label fw-bold">
+                                    <i class="bi bi-check-circle me-1"></i> Status
+                                </label>
+                                <select class="form-select @error('status') is-invalid @enderror" id="status" name="status">
+                                    <option value="open" {{ old('status', $scholarship->status) == 'open' ? 'selected' : '' }}>Open</option>
+                                    <option value="closed" {{ old('status', $scholarship->status) == 'closed' ? 'selected' : '' }}>Closed</option>
+                                    <option value="on-hold" {{ old('status', $scholarship->status) == 'on-hold' ? 'selected' : '' }}>On Hold</option>
+                                </select>
+                                @error('status')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-4">
+                                <label for="budget" class="form-label fw-bold">
+                                    <i class="bi bi-cash-coin me-1"></i> Budget
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-text">$</span>
+                                    <input type="number" class="form-control @error('budget') is-invalid @enderror"
+                                           name="budget" id="budget" value="{{ old('budget', $scholarship->budget) }}" min="0" step="0.01">
+                                </div>
+                                @error('budget')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                                <div class="form-text text-muted">Enter the total scholarship budget.</div>
+                            </div>
+                            <div class="col-md-4">
                                 <label for="student_limit" class="form-label fw-bold">
                                     <i class="bi bi-people me-1"></i> Student Limit
                                 </label>
@@ -125,24 +151,8 @@
                             </div>
                         </div>
 
-                        <div class="row mb-4">
-                            <div class="col-md-12">
-                                <div class="form-check form-switch ps-0">
-                                    <div class="d-flex align-items-center">
-                                        <input type="hidden" name="is_open" value="0">
-                                        <input class="form-check-input ms-0 me-2" type="checkbox" name="is_open" id="is_open"
-                                               value="1" {{ old('is_open', $scholarship->is_open) ? 'checked' : '' }}>
-                                        <label class="form-check-label fw-bold" for="is_open">
-                                            <i class="bi bi-door-open me-1"></i> Accepting Applications
-                                        </label>
-                                    </div>
-                                    <div class="form-text text-muted">Toggle to control if students can apply for this scholarship.</div>
-                                </div>
-                            </div>
-                        </div>
-
                         <div class="d-flex justify-content-between border-top pt-4 mt-3">
-                            <a href="{{ route('Scholarship.index') }}" class="btn btn-outline-secondary px-4">
+                            <a href="{{ route('sponsor.scholarships.index') }}" class="btn btn-outline-secondary px-4">
                                 <i class="bi bi-x-circle me-1"></i> Cancel
                             </a>
                             <button type="submit" class="btn btn-primary px-4">
