@@ -207,7 +207,12 @@
                         <i class="fas fa-tachometer-alt"></i> Dashboard
                     </a>
                 </li>
-
+                <li>
+                    <a href="{{ route('admin.analytics') }}"
+                        class="{{ request()->routeIs('admin.analytics') ? 'active' : '' }}">
+                        <i class="fas fa-chart-line"></i> Analytics
+                    </a>
+                </li>
                 <li>
                     <a href="/Scholars" class="">
                         <i class="fas fa-users"></i> Scholars

@@ -47,7 +47,8 @@ Route::get('/student/scholarships', [ScholarshipController::class, 'showScholars
 
 Route::get('/student/dashboard', [StudentDashboardController::class, 'index'])->name('student.dashboard');
 
-Route::get('/student/dashboard', [StudentController::class, 'dashboard'])->name('dashboard');
+// This is a duplicate name, I will remove one of them.
+// Route::get('/student/dashboard', [StudentController::class, 'dashboard'])->name('dashboard');
 
 Route::get('/scholarships/{scholarship}/apply', [ApplicationFormController::class, 'apply'])->name('scholarships.apply');
 Route::post('/scholarships/{scholarship}/apply', [ApplicationFormController::class, 'submitApplication'])->name('scholarships.submit');
@@ -55,9 +56,9 @@ Route::post('/scholarships/{scholarship}/apply', [ApplicationFormController::cla
 Route::post('/scholarships/{scholarship}/submit', [ApplicationFormController::class, 'submitApplication'])->name('scholarships.submit');
 
 
-Route::get('/student/my-applications', action: [StudentController::class, 'myScholarshipApplications'])
+Route::get('/student/my-applications', [StudentController::class, 'myScholarshipApplications'])
 ->name('student.my-applications');
-Route::get('/student/listscholarship', action: [StudentController::class, 'ListScholarship'])
+Route::get('/student/listscholarship', [StudentController::class, 'ListScholarship'])
 ->name('student.listscholarship');
 
 Route::get('/Scholars', [ScholarsController::class, 'index'])->name('scholars.index');
@@ -68,6 +69,7 @@ Route::post('sponsor/login', [LoginController::class, 'sponsorLogin']);
 
 Route::middleware(['auth:sponsor'])->prefix('sponsor')->name('sponsor.')->group(function () {
     Route::get('dashboard', [SponsorDashboardController::class, 'index'])->name('dashboard');
+    Route::get('analytics', [SponsorDashboardController::class, 'analytics'])->name('analytics');
 
     // Application routes
     Route::get('applications', [ApplicationController::class, 'index'])->name('applications');
@@ -83,4 +85,5 @@ Route::middleware(['auth:sponsor'])->prefix('sponsor')->name('sponsor.')->group(
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('applications', [AdminApplicationController::class, 'index'])->name('applications');
     Route::get('applications/{id}/view', [AdminApplicationController::class, 'view'])->name('applications.view');
+    Route::get('analytics', [AdminDashboardController::class, 'analytics'])->name('analytics');
 });

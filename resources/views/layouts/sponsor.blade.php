@@ -134,6 +134,11 @@
                         <i class="fas fa-file-alt"></i> Applications
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('sponsor.analytics') }}" class="{{ request()->routeIs('sponsor.analytics') ? 'active' : '' }}">
+                        <i class="fas fa-chart-line"></i> Analytics
+                    </a>
+                </li>
             </ul>
 
             <div class="sidebar-footer">
