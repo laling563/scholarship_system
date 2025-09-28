@@ -14,7 +14,7 @@ class ApplicationController extends Controller
             $sponsor = Auth::guard('sponsor')->user();
             $scholarshipIds = $sponsor->scholarships()->pluck('scholarship_id');
 
-            $applications = ApplicationForm::with(['student', 'scholarship'])
+            $applications = ApplicationForm::with(['student', 'scholarship', 'documents'])
                 ->whereIn('scholarship_id', $scholarshipIds)
                 ->where('status', 'pending')
                 ->get();
@@ -24,16 +24,15 @@ class ApplicationController extends Controller
 
         // For admin
         $applications = ApplicationForm::with(['student', 'scholarship'])
-                            ->where('status', 'pending')
-                            ->get();
+            ->where('status', 'pending')
+            ->get();
 
         return view('Admin.ValidateApplication', compact('applications'));
     }
 
     public function view($id)
     {
-        $application = ApplicationForm::with('student','documents')->findOrFail($id);
-
+        $application = ApplicationForm::with('student', 'documents')->findOrFail($id);
 
         if (Auth::guard('sponsor')->check()) {
             $this->authorizeSponsorAction($application);

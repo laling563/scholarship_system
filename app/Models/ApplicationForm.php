@@ -15,17 +15,44 @@ class ApplicationForm extends Model
     protected $primaryKey = 'applicationform_id';
 
     protected $fillable = [
-        'scholarship_id', 'student_id', 'date_of_birth', 'civil_status',
-        'place_of_birth', 'religion', 'height', 'weight', 'home_address',
-        'contact_address', 'boarding_address', 'landlord_landlady',
-        'high_school_graduated', 'high_school_year_graduated', 'special_skills',
-        'curriculum_year', 'father_first_name', 'father_middle_name',
-        'father_last_name', 'father_occupation', 'father_monthly_income',
-        'father_educational_attainment', 'father_school_graduated', 'father_year_graduated',
-        'mother_first_name', 'mother_middle_name', 'mother_last_name',
-        'mother_occupation', 'mother_monthly_income', 'mother_educational_attainment',
-        'mother_school_graduated', 'mother_year_graduated', 'number_of_brothers',
-        'number_of_sisters', 'total_monthly_income', 'status', 'submission_date', 'notes'
+        'scholarship_id',
+        'student_id',
+        'date_of_birth',
+        'civil_status',
+        'place_of_birth',
+        'religion',
+        'height',
+        'weight',
+        'home_address',
+        'contact_address',
+        'boarding_address',
+        'landlord_landlady',
+        'high_school_graduated',
+        'high_school_year_graduated',
+        'special_skills',
+        'curriculum_year',
+        'father_first_name',
+        'father_middle_name',
+        'father_last_name',
+        'father_occupation',
+        'father_monthly_income',
+        'father_educational_attainment',
+        'father_school_graduated',
+        'father_year_graduated',
+        'mother_first_name',
+        'mother_middle_name',
+        'mother_last_name',
+        'mother_occupation',
+        'mother_monthly_income',
+        'mother_educational_attainment',
+        'mother_school_graduated',
+        'mother_year_graduated',
+        'number_of_brothers',
+        'number_of_sisters',
+        'total_monthly_income',
+        'status',
+        'submission_date',
+        'notes'
     ];
 
     /**
@@ -48,8 +75,7 @@ class ApplicationForm extends Model
      * Get the documents for the application form.
      */
     public function documents()
-{
-    return $this->hasMany(ApplicationDocument::class, 'applicationform_id');
-}
-
+    {
+        return $this->hasMany(ApplicationDocument::class, 'applicationform_id');
+    }
 }

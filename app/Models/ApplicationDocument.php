@@ -25,8 +25,8 @@ class ApplicationDocument extends Model
         return $this->belongsTo(ApplicationForm::class, 'applicationform_id', 'applicationform_id');
     }
     public function application()
-{
-    return $this->belongsTo(ApplicationForm::class, 'applicationform_id');
-}
+    {
+        return $this->belongsTo(ApplicationForm::class, 'applicationform_id');
+    }
 
 }
