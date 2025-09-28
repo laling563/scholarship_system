@@ -28,10 +28,13 @@ class ScholarshipController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+
+
+        $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'requirements' => 'nullable|string',
+            'requirements' => 'nullable|array',
+            'requirements.*' => 'nullable|string',
             'status' => 'required|string|in:open,closed,on-hold',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
@@ -39,8 +42,17 @@ class ScholarshipController extends Controller
             'budget' => 'nullable|numeric|min:0',
         ]);
 
+        // --- THIS IS THE CRUCIAL STEP TO FIX THE ERROR ---
+        if (isset($validated['requirements']) && is_array($validated['requirements'])) {
+            // Convert the PHP array of requirements into a JSON string
+            $validated['requirements'] = json_encode(array_filter($validated['requirements']));
+        } else {
+            // Ensure it's stored as an empty JSON array if no requirements were submitted
+            $validated['requirements'] = '[]';
+        }
+
         $sponsor = Auth::guard('sponsor')->user();
-        $sponsor->scholarships()->create($request->all());
+        $sponsor->scholarships()->create($validated);
 
         return redirect()->route('sponsor.scholarships.index')->with('success', 'Scholarship created successfully.');
     }
@@ -56,7 +68,8 @@ class ScholarshipController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'requirements' => 'nullable|string',
+            'requirements' => 'nullable|array',
+            'requirements.*' => 'nullable|string',
             'status' => 'required|string|in:open,closed,on-hold',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',

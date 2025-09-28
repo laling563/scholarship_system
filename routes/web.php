@@ -48,7 +48,7 @@ Route::get('/student/scholarships', [ScholarshipController::class, 'showScholars
 Route::get('/student/dashboard', [StudentDashboardController::class, 'index'])->name('student.dashboard');
 
 // This is a duplicate name, I will remove one of them.
-// Route::get('/student/dashboard', [StudentController::class, 'dashboard'])->name('dashboard');
+Route::get('/student/dashboard', [StudentController::class, 'dashboard'])->name('dashboard');
 
 Route::get('/scholarships/{scholarship}/apply', [ApplicationFormController::class, 'apply'])->name('scholarships.apply');
 Route::post('/scholarships/{scholarship}/apply', [ApplicationFormController::class, 'submitApplication'])->name('scholarships.submit');

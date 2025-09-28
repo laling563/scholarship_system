@@ -61,8 +61,7 @@ class LoginController extends Controller
             ]);
             return redirect()->route('dashboard')
             ->with('success', 'Student login successful!')
-            ->with('scholarships', $scholarships)
-            ;
+            ->with('scholarships', $scholarships);
         }
 
         // Check if admin login is valid

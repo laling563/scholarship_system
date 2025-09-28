@@ -84,13 +84,18 @@
 
                         <div class="row mb-4">
                             <div class="col-md-12">
-                                <label for="requirements" class="form-label fw-bold">
-                                    <i class="bi bi-list-check me-1"></i> Requirements
-                                </label>
-                                <textarea class="form-control @error('requirements') is-invalid @enderror" name="requirements"
-                                          id="requirements" rows="4" placeholder="List eligibility requirements">{{ old('requirements', $scholarship->requirements) }}</textarea>
-                                @error('requirements')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                                <div class="form-text text-muted">Specify academic, financial or other requirements (one per line).</div>
+                                <label class="form-label fw-bold"><i class="bi bi-list-check me-1"></i> Requirements</label>
+                                <div id="requirements-container">
+                                    @if(is_array(old('requirements', $scholarship->requirements)))
+                                        @foreach(old('requirements', $scholarship->requirements) as $requirement)
+                                            <div class="input-group mb-2">
+                                                <input type="text" class="form-control" name="requirements[]" value="{{ $requirement }}">
+                                                <button type="button" class="btn btn-danger remove-requirement"><i class="bi bi-trash"></i></button>
+                                            </div>
+                                        @endforeach
+                                    @endif
+                                </div>
+                                <button type="button" id="add-requirement" class="btn btn-outline-primary mt-2"><i class="bi bi-plus-circle me-1"></i> Add Requirement</button>
                             </div>
                         </div>
 
@@ -212,6 +217,20 @@ document.addEventListener('DOMContentLoaded', function() {
     if (startDate.value) {
         endDate.min = startDate.value;
     }
+
+    document.getElementById('add-requirement').addEventListener('click', function() {
+        var container = document.getElementById('requirements-container');
+        var inputGroup = document.createElement('div');
+        inputGroup.className = 'input-group mb-2';
+        inputGroup.innerHTML = '<input type="text" class="form-control" name="requirements[]"><button type="button" class="btn btn-danger remove-requirement"><i class="bi bi-trash"></i></button>';
+        container.appendChild(inputGroup);
+    });
+
+    document.getElementById('requirements-container').addEventListener('click', function(e) {
+        if (e.target.classList.contains('remove-requirement') || e.target.parentElement.classList.contains('remove-requirement')) {
+            e.target.closest('.input-group').remove();
+        }
+    });
 });
 </script>
 @endsection
