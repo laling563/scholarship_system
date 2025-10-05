@@ -83,6 +83,10 @@
                 </a>
             </div>
             <div class="text-center mt-3">
+                <a href="{{ route('admin.login') }}" class="sponsor-login-link">
+                    Login as Admin
+                </a>
+                <span class="mx-2">|</span>
                 <a href="{{ route('sponsor.login') }}" class="sponsor-login-link">
                     Login as Sponsor
                 </a>

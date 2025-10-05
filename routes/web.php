@@ -83,6 +83,9 @@ Route::middleware(['auth:sponsor'])->prefix('sponsor')->name('sponsor.')->group(
     Route::resource('scholarships', ScholarshipController::class);
 });
 
+Route::get('admin/login', [LoginController::class, 'showAdminLoginForm'])->name('admin.login');
+Route::post('admin/login', [LoginController::class, 'adminLogin']);
+
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('applications', [AdminApplicationController::class, 'index'])->name('applications');
     Route::get('applications/{id}/view', [AdminApplicationController::class, 'view'])->name('applications.view');

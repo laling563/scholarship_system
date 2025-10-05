@@ -48,6 +48,10 @@ return [
             'driver' => 'session',
             'provider' => 'sponsors',
         ],
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+        ],
     ],
 
     /*
@@ -79,6 +83,10 @@ return [
         'sponsors' => [
             'driver' => 'eloquent',
             'model' => App\Models\Sponsor::class,
+        ],
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class,
         ],
     ],
 

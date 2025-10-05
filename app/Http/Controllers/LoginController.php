@@ -31,25 +31,22 @@ class LoginController extends Controller
 
         $login_input = $request->input('login');
 
-        // Check if input is an email or student_id (or admin email/faculty_id)
+        // Only check for student login
         $student = null;
-        $admin = null;
 
-        // Check if it's a student or admin login based on the input format
         if (filter_var($login_input, FILTER_VALIDATE_EMAIL)) {
-            // If it's an email, look for a student or admin
+            // If it's an email, look for a student
             $student = Student::where('email', $login_input)->first();
-            $admin = Admin::where('email', $login_input)->first();
         } else {
-            // If it's not an email, assume it's a student_id or faculty_id for admin login
+            // If it's not an email, assume it's a student_id
             $student = Student::where('student_id', $login_input)->first();
-            $admin = Admin::where('faculty_id', $login_input)->first();
         }
 
         // Check if student login is valid
         if ($student && Hash::check($request->password, $student->password)) {
             // Manually login the student
             $scholarships = Scholarship::where('is_open', true)->get();
+
             session([
                 'student_id' => $student->id,
                 'student_fname' => $student->fname,
@@ -59,27 +56,16 @@ class LoginController extends Controller
                 'student_yearlevel' => $student->year_level,
                 // Add more attributes as needed
             ]);
-            return redirect()->route('dashboard')
-            ->with('success', 'Student login successful!')
-            ->with('scholarships', $scholarships);
-        }
 
-        // Check if admin login is valid
-        if ($admin && Hash::check($request->password, $admin->password)) {
-            // Manually login the admin
-            session([
-                'admin_id' => $admin->id,
-                'admin_fname' => $admin->fname,
-                'admin_lname' => $admin->lname,
-                'admin_email' => $admin->email,
-                'admin_role' => $admin->role,  // Add more attributes as needed
-            ]);
-            return redirect()->route('admin_dashboard')->with('success', 'Admin login successful!');
+            return redirect()->route('dashboard')
+                ->with('success', 'Student login successful!')
+                ->with('scholarships', $scholarships);
         }
 
         // If no match is found
-        return back()->with('error', 'Invalid credentials. Please try again.');
+        return back()->with('error', 'Invalid student credentials. Please try again.');
     }
+
 
     public function logout(Request $request)
     {
@@ -115,4 +101,37 @@ class LoginController extends Controller
             'email' => 'The provided credentials do not match our records.',
         ]);
     }
+
+    public function showAdminLoginForm()
+    {
+        return view('Login.AdminLoginPage');
+    }
+
+    public function adminLogin(Request $request)
+    {
+        $request->validate([
+            'faculty_id' => 'required|string',
+            'password' => 'required|string',
+        ]);
+
+        $admin = Admin::where('faculty_id', $request->faculty_id)->first();
+
+        // Validate admin credentials
+        if ($admin && Hash::check($request->password, $admin->password)) {
+            // Store session
+            session([
+                'admin_id' => $admin->id,
+                'admin_fname' => $admin->fname,
+                'admin_lname' => $admin->lname,
+                'admin_email' => $admin->email,
+                'admin_role' => $admin->role,
+            ]);
+
+            return redirect()->route('admin_dashboard')
+                ->with('success', 'Admin login successful!');
+        }
+
+        return back()->with('error', 'Invalid Faculty ID or password. Please try again.');
+    }
+
 }
