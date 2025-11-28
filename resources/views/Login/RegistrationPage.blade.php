@@ -88,10 +88,12 @@
                 @error('email') <div class="invalid-feedback">{{ $message }}</div> @enderror
             </div>
 
+            <!-- 🔓 Simplified Password Fields -->
             <div class="row mb-3">
                 <div class="col">
                     <label for="password" class="form-label"><i class="bi bi-lock-fill"></i> Password</label>
                     <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" required>
+                    <small class="text-muted"></small>
                     @error('password') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>
                 <div class="col">

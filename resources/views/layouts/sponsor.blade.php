@@ -10,25 +10,16 @@
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Custom Sponsor CSS -->
     <style>
         :root {
             --sponsor-primary: #2c3e50;
-            /* Same as admin */
             --sponsor-secondary: #34495e;
-            /* Same as admin */
             --sponsor-accent: #3498db;
-            /* Same as admin */
             --sponsor-light: #ecf0f1;
-            /* Same as admin */
             --sponsor-danger: #e74c3c;
-            /* Same as admin */
             --sponsor-success: #2ecc71;
-            /* Same as admin */
             --sponsor-warning: #f39c12;
-            /* Same as admin */
             --sponsor-info: #3498db;
-            /* Same as admin */
         }
 
         body {
@@ -36,13 +27,14 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
+        /* Sidebar */
         .sponsor-sidebar {
             background: var(--sponsor-primary);
             color: white;
             height: 100vh;
             position: fixed;
-            transition: all 0.3s;
             width: 250px;
+            transition: all 0.3s;
             z-index: 1000;
         }
 
@@ -65,11 +57,7 @@
             border-left: 3px solid transparent;
         }
 
-        .sponsor-sidebar ul li a:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-left: 3px solid var(--sponsor-accent);
-        }
-
+        .sponsor-sidebar ul li a:hover,
         .sponsor-sidebar ul li a.active {
             background: rgba(255, 255, 255, 0.1);
             border-left: 3px solid var(--sponsor-accent);
@@ -89,16 +77,50 @@
             background: var(--sponsor-secondary);
         }
 
+        /* Page content */
         .sponsor-content {
             margin-left: 250px;
             transition: all 0.3s;
             min-height: 100vh;
+        }
+
+        /* Mobile styles */
+        @media (max-width: 768px) {
+            .sponsor-sidebar {
+                margin-left: -250px;
+            }
+
+            .sponsor-sidebar.active {
+                margin-left: 0;
+            }
+
+            .sponsor-content {
+                margin-left: 0;
+            }
+
+            .sidebar-toggle-btn {
+                display: inline-block;
+                position: fixed;
+                top: 10px;
+                left: 10px;
+                z-index: 1100;
+                background: var(--sponsor-primary);
+                color: white;
+                border: none;
+                padding: 8px 12px;
+                border-radius: 5px;
+            }
         }
     </style>
     @yield('styles')
 </head>
 
 <body>
+    <!-- Sidebar toggle button for mobile -->
+    <button class="sidebar-toggle-btn d-md-none">
+        <i class="fas fa-bars"></i>
+    </button>
+
     <div class="wrapper d-flex align-items-stretch">
         <!-- Sidebar -->
         <nav id="sidebar" class="sponsor-sidebar">
@@ -108,7 +130,7 @@
             </div>
 
             <div class="px-3 py-2 d-flex align-items-center">
-                <img src="/images/sponsor.png" class="rounded-circle me-2" alt="Sponsor"
+                <img src="/images/sponsor.jpg" class="rounded-circle me-2" alt="Sponsor"
                     style="width: 40px; height: 40px; object-fit: cover;">
                 <div>
                     <h6 class="mb-0">{{ Auth::guard('sponsor')->user()->name }}</h6>
@@ -135,28 +157,22 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('sponsor.analytics') }}" class="{{ request()->routeIs('sponsor.analytics') ? 'active' : '' }}">
+                    <a href="{{ route('sponsor.analytics') }}"
+                        class="{{ request()->routeIs('sponsor.analytics') ? 'active' : '' }}">
                         <i class="fas fa-chart-line"></i> Analytics
                     </a>
                 </li>
             </ul>
 
-            <div class="sidebar-footer">
-                <div class="d-flex justify-content-between">
-                    <a href="" class="text-light" title="Profile">
-                        <i class="fas fa-user-circle"></i>
-                    </a>
-                    <a href="" class="text-light" title="Notifications">
-                        <i class="fas fa-bell"></i>
-                    </a>
-                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                        class="text-light" title="Logout">
-                        <i class="fas fa-sign-out-alt"></i>
-                    </a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                    </form>
-                </div>
+            <div class="sidebar-footer text-center">
+                <a href="#"
+                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                    class="text-danger" title="Logout">
+                    <i class="fas fa-sign-out-alt fa-lg"></i>
+                </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                </form>
             </div>
         </nav>
 
@@ -185,6 +201,13 @@
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.sidebar-toggle-btn').on('click', function () {
+                $('#sidebar').toggleClass('active');
+            });
+        });
+    </script>
 
     @yield('scripts')
 </body>

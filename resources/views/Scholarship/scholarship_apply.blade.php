@@ -35,7 +35,7 @@
                     </div>
                     <div>
                         <h6 class="mb-0">{{ session('student_fname') }} {{ session('student_lname') }}</h6>
-                        <small class="text-white-50">Student</small>
+                        <!-- <small class="text-white-50">Student</small> -->
                     </div>
                 </div>
             </div>
@@ -43,7 +43,7 @@
             <div class="p-3">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link text-white active" href="#">
+                        <a class="nav-link text-white" href="/student/dashboard">
                             <i class="fas fa-home me-2"></i> Dashboard
                         </a>
                     </li>
@@ -53,15 +53,15 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="">
+                        <a class="nav-link text-white active" href="">
                             <i class="fas fa-search me-2"></i> Find Scholarships
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link text-white" href="#">
                             <i class="fas fa-cog me-2"></i> Settings
                         </a>
-                    </li>
+                    </li> -->
                     <li class="nav-item mt-5">
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: inline;">
                             @csrf
@@ -87,22 +87,22 @@
                         </ol>
                     </nav>
                 </div>
-                <div class="badge bg-primary bg-opacity-10 text-primary p-2">
+                <!-- <div class="badge bg-primary bg-opacity-10 text-primary p-2">
                     <i class="bi bi-info-circle me-2"></i>Application Deadline: {{ $scholarship->deadline }}
-                </div>
+                </div> -->
             </div>
 
             <!-- Application Progress -->
             <div class="card border-0 shadow-sm mb-4">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
+                    <!-- <div class="d-flex justify-content-between align-items-center mb-3">
                         <h5 class="mb-0">Application Progress</h5>
                         <small class="text-muted">Step 1 of 6</small>
-                    </div>
-                    <div class="progress" style="height: 8px;">
+                    </div> -->
+                    <!-- <div class="progress" style="height: 8px;">
                         <div class="progress-bar bg-primary" role="progressbar" style="width: 16.66%;" aria-valuenow="16.66"
                             aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
 

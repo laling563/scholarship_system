@@ -81,16 +81,14 @@ class StudentController extends Controller
             return redirect()->route('login')->with('error', 'Session expired. Please log in again.');
         }
 
-        // Get IDs of scholarships the student already applied to
-        $appliedScholarshipIds = \App\Models\ApplicationForm::where('student_id', $studentId)
-            ->pluck('scholarship_id');
-
-        // Get scholarships that are open AND not full
-        $scholarships = \App\Models\Scholarship::where('is_open', true)
+        $applications = \App\Models\ApplicationForm::with(['scholarship', 'student', 'documents'])
+            ->where('student_id', $studentId)
             ->get();
 
-        return view('Student.dashboard', compact('scholarships', 'appliedScholarshipIds'));
+        return view('Student.dashboard', compact('applications'));
     }
+
+
 
     public function ListScholarship()
     {

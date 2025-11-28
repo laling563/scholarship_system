@@ -28,7 +28,7 @@
 
             <div class="form-group">
                 <label for="login" class="form-label">
-                    <i class="bi bi-person-fill"></i> Student ID or Email
+                    <i class="bi bi-person-fill"></i> Student ID
                 </label>
                 <div class="input-group">
                     <!-- <span class="input-group-text"><i class="bi bi-person"></i></span> -->

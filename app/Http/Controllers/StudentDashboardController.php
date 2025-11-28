@@ -4,6 +4,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ApplicationForm;
 use Illuminate\Http\Request;
 use App\Models\Scholarship;
 
@@ -46,4 +47,23 @@ class StudentDashboardController extends Controller
         return view('Student.ListScholarship', compact('scholarships', 'appliedScholarshipIds'));
 
     }
+public function myApplications()
+{
+    // Get logged-in student ID
+    $studentId = session('student_id');
+
+    if (!$studentId) {
+        return redirect()->route('login')->with('error', 'Session expired. Please log in again.');
+    }
+
+    // Fetch only this student's applications
+    $applications = ApplicationForm::where('student_id', $studentId)
+        ->with(['scholarship', 'documents'])
+        ->get();
+
+    // Return view with data
+    return view('Student.my-applications', compact('applications'));
+}
+
+
 }

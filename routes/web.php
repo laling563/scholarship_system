@@ -57,7 +57,7 @@ Route::post('/scholarships/{scholarship}/apply', [ApplicationFormController::cla
 Route::post('/scholarships/{scholarship}/submit', [ApplicationFormController::class, 'submitApplication'])->name('scholarships.submit');
 
 
-Route::get('/student/my-applications', [StudentController::class, 'myScholarshipApplications'])
+Route::get('/student/my-applications', [StudentDashboardController::class, 'myApplications'])
 ->name('student.my-applications');
 Route::get('/student/listscholarship', [StudentController::class, 'ListScholarship'])
 ->name('student.listscholarship');
